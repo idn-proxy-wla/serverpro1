@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVER PRO V3</title>
+    <style>
+        /* Latar belakang tema hacker */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            background-color: #000000; /* Hitam */
+            color: #00FF00; /* Hijau neon */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Pinggir bio dengan garis hijau-hitam dan animasi warna berjalan */
+        .bio-container {
+            border: 5px solid;
+            border-image: linear-gradient(45deg, #00FF00, #000000, #00FF00, #000000);
+            border-image-slice: 1;
+            padding: 40px;
+            border-radius: 10px;
+            animation: colorShift 3s linear infinite;
+        }
+
+        /* Animasi warna berjalan di pinggir bio */
+        @keyframes colorShift {
+            0% { border-image-source: linear-gradient(45deg, #00FF00, #000000, #00FF00, #000000); }
+            50% { border-image-source: linear-gradient(45deg, #000000, #00FF00, #000000, #00FF00); }
+            100% { border-image-source: linear-gradient(45deg, #00FF00, #000000, #00FF00, #000000); }
+        }
+
+        /* Judul dengan warna hijau keren berkedip pelan */
+        h1 {
+            font-size: 3em;
+            color: #00FF00; /* Hijau neon */
+            animation: blink 1.5s step-end infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Styling untuk select dan button */
+        select, button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 1.2em;
+            background-color: #333;
+            color: #00FF00;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        select {
+            background-color: #444;
+        }
+
+        /* Styling untuk bendera */
+        .flag {
+            width: 20px;
+            height: 15px;
+            margin-right: 10px;
+        }
+
+        /* Progress bar hijau-hitam */
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            margin-top: 20px;
+        }
+
+        #progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #00FF00, #000000);
+        }
+
+        #progresstext {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        /* Pop-up styling untuk "Proses selesai" muncul dari atas */
+        .popup {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 2em;
+            position: absolute;
+            top: -50px; /* Menempatkan pop-up di atas */
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: #00FF00;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: popUpFromTop 1s ease-in-out forwards;
+        }
+
+        @keyframes popUpFromTop {
+            0% { opacity: 0; transform: translate(-50%, -50%); }
+            100% { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bio-container">
+        <h2>SERVER PRO V3</h2>
+
+        <!-- Select server dengan bendera -->
+        <select id="serverSelect">
+            <option value="">Pilih Server</option>
+            <option value="JAPAN"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/2560px-Flag_of_the_United_States.svg.png" class="flag" alt="JAPAN"> 1. Server - JAPAN</option>
+            <option value="VIETNAM"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/2560px-Flag_of_Indonesia.svg.png" class="flag" alt="VIETNAM">2. Server - VIETNAM</option>
+            <option value="SINGAPORE"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Singapore.svg/2560px-Flag_of_Singapore.svg.png" class="flag" alt="SINGAPORE">3. Server - SINGAPORE</option>
+            <option value="BANGKOK"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flag_of_Europe.svg/2560px-Flag_of_Europe.svg.png" class="flag" alt="BANGKOK">4. Server - BANGKOK</option>
+        </select>
+        
+        <br>
+        <button onclick="startProgress()">SUBMIT</button>
+
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+        <div id="progresstext">Progress: 0%</div>
+
+        <!-- Pop-up Proses Selesai -->
+        <div id="popup" class="popup">Proses selesai! Server: <span id="selected-server"></span></div>
+    </div>
+
+    <script>
+        function startProgress() {
+            // Mendapatkan pilihan server
+            var server = document.getElementById('serverSelect').value;
+
+            // Cek jika server belum dipilih
+            if (server === "") {
+                alert("Pilih server terlebih dahulu!");
+                return; // Hentikan fungsi jika belum ada pilihan
+            }
+
+            var progress = 0;
+            var progressBar = document.getElementById('progress');
+            var progressText = document.getElementById('progresstext');
+
+            var interval = setInterval(function() {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Menampilkan pop-up proses selesai
+                    document.getElementById('popup').style.display = "block";
+                    document.getElementById('selected-server').textContent = server; // Menampilkan nama server yang dipilih
+                    
+                    // Menunggu beberapa detik sebelum mengarahkan
+                    setTimeout(function() {
+                        var link = "";
+                        if (server == "JAPAN") {
+                            link = "https://beku4dwd.com/register?referral_code=vvip";
+                        } else if (server == "VIETNAM") {
+                            link = "https://bekutogel.com/register?referral_code=vvip";
+                        } else if (server == "SINGAPORE") {
+                            link = "https://beku4dking.com/register?referral_code=vvip";
+                        } else if (server == "BANGKOK") {
+                            link = "https://beku4dorg.com/register?referral_code=vvip";
+                        }
+
+                        // Arahkan ke link yang sesuai dengan pilihan server
+                        window.location.href = link;
+                    }, 2000); // Delay 2 detik sebelum mengarahkan
+                } else {
+                    progress += 1;
+                    progressBar.style.width = progress + "%";
+                    progressText.textContent = "Progress: " + progress + "%";
+                }
+            }, 50); // Adjust speed of the progress bar
+        }
+    </script>
+
+</body>
+</html>
